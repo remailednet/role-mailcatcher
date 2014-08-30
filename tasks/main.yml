@@ -27,3 +27,9 @@
 
 - name: Start mailcatcher properly with the start script
   command: /etc/init.d/mailcatcher
+
+- name: Add Mailcatcher to UFW
+  ufw: rule=allow port={{ item }} proto=tcp
+  with_items:
+      - "{{ mailcatcher_smtp_port }}"
+      - "{{ mailcatcher_http_port }}"
